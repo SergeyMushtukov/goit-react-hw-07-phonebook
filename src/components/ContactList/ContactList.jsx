@@ -1,7 +1,7 @@
 import css from './ContactList.module.css';
 import { Contact } from '../Contact/Contact';
 import { useSelector } from 'react-redux';
-import { getContacts, getFilter } from '../../redux/selectors';
+import { selectContacts, selectFilter } from '../../redux/selectors';
 
 const getVisibleList = (contacts, filter) => {
   const normalizedFilter = filter.toLowerCase();
@@ -11,14 +11,14 @@ const getVisibleList = (contacts, filter) => {
 };
 
 export const ContactList = () => {
-  const contacts =  useSelector(getContacts);
-  const filter = useSelector(getFilter);
+  const contacts =  useSelector(selectContacts);
+  const filter = useSelector(selectFilter);
   const visibleList = getVisibleList(contacts, filter);
 
   return (
     <ul className={css.list}>
-      {visibleList.map(({ id, name, number }) => (
-        <Contact key={id} name={name} number={number} id={id}></Contact>
+      {visibleList.map((contact) => (
+        <Contact key={contact.id} contact={contact}></Contact>
       ))}
     </ul>
   );
